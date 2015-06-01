@@ -44,7 +44,6 @@ class GeometryGroup{
             GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
             const GLchar *VertexSourcePointer = (const GLchar *) vertexShader.c_str();
-            std::cout << "Just try to compile" << VertexSourcePointer << std::endl;
             glShaderSource(VertexShaderID, 1, &VertexSourcePointer , 0);
             std::cout << "RBEFORE 1" ;
             glCompileShader(VertexShaderID);
