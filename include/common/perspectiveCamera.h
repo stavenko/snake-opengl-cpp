@@ -1,6 +1,7 @@
 #pragma once
 #include <common/camera.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext.hpp>
 class PerspectiveCamera:public Camera{
     private:
         glm::mat4 projectionMatrix;

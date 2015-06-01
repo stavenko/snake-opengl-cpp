@@ -45,14 +45,14 @@ int main( void )
     std::cout << "add Box:" << std::endl;
     scene.add(&bo);
     std::cout << "create camera:" << std::endl;
-    PerspectiveCamera camera = PerspectiveCamera(45.f, 3.0f/4.0f, 1.0f, 10000.0f);
+    PerspectiveCamera camera = PerspectiveCamera(45.f, 4.0f/3.0f, 0.1f, 10000.0f);
     std::cout << "setup camera:" << std::endl;
-    camera.lookAt(glm::vec3(10, 50, 10), glm::vec3(0,0,0), glm::vec3(0,1,0));
+    camera.lookAt(glm::vec3(5, 50, 5), glm::vec3(0,0,0), glm::vec3(0,1,0));
+    std::cout << "it's actually done:" << std::endl;
+    
 
   do{
-      std::cout << "looping:" << std::endl;
-      renderer.render(scene, camera);
-      std::cout <<"llops"<<std::endl;
+      renderer.render(scene, &camera);
 
   } // Check if the ESC key was pressed or the window was closed
   while( !renderer.shouldClose());

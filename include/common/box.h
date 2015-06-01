@@ -10,7 +10,7 @@ class BoxObject: public Object3D{
     public:
         BoxObject(){
             const static char* cvShader = "#version 400 core \n \
-                in vec3 position;\n \
+                layout(location=0) in vec3 position;\n \
                 uniform mat4 projectionMatrix;\n \
                 uniform mat4 viewMatrix;\n \
                 uniform mat4 modelMatrix;\n \
@@ -20,13 +20,11 @@ class BoxObject: public Object3D{
             const static char* cfShader = "#version 400 core \n \
                 out vec3 color; \n \
                 void main(){\n \
-                     color = vec3(1., 0., 0.);\n \
+                     color = vec3(1, 0, 0);\n \
                 } \n";
             const static std::string vShader = std::string(cvShader);
             const static std::string fShader = std::string(cfShader);
 
-            std::cout << "VSHADER" << std::endl << vShader << std::endl;
-            std::cout << "FSHADER" << std::endl << fShader << std::endl;
             static const int vxLen = 36 * 3;
             static const GLfloat g_vertex_buffer_data[] = {
                 -1.0f,-1.0f,-1.0f, // triangle 1 : begin
@@ -79,7 +77,7 @@ class BoxObject: public Object3D{
         }
 
         virtual glm::mat4 getModelMatrix(){
-            return glm::mat4();
+            return glm::mat4(1.0f);
         };
         virtual std::vector<GeometryGroup> getGeometryGroups(){
             return geometryGroups;

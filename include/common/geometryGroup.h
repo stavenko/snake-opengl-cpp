@@ -13,7 +13,10 @@ class GeometryGroup{
             compileShaderProgram(vertexShader, fragmentShader);
             prepareVertexBuffer( vertexArray );
         };
-        const GLuint getProgramID(){ return programID; };
+        const GLuint getProgramID(){ 
+            std::cout <<"get program";
+            return programID; 
+        };
         const GLuint getVertexBuffer(){ return vertexBuffer; };
         ~GeometryGroup(){
               glDeleteBuffers(1, &vertexBuffer);
