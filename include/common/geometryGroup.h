@@ -6,6 +6,7 @@ class GeometryGroup{
     private:
         GLuint programID;
         GLuint vertexBuffer;
+        GLuint vertices;
     public:
 
 
@@ -16,6 +17,9 @@ class GeometryGroup{
         const GLuint getProgramID(){ 
             std::cout <<"get program";
             return programID; 
+        }; 
+        const GLuint getAmount(){
+            return vertices;
         };
         const GLuint getVertexBuffer(){ return vertexBuffer; };
         ~GeometryGroup(){
@@ -27,6 +31,7 @@ class GeometryGroup{
             return a>b?a:b;
         };
         void prepareVertexBuffer(std::vector<float> array){
+            vertices = array.size()/ 3.0;
             glGenBuffers(1, &vertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
             glBufferData(GL_ARRAY_BUFFER, array.size(), &array[0], GL_STATIC_DRAW);

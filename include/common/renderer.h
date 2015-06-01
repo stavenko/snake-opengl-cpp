@@ -56,7 +56,7 @@ class Renderer{
     private:
         void renderGeometryGroup(GeometryGroup gg, glm::mat4 projectionMatrix, glm::mat4 viewMatrix,  glm::mat4 modelMatrix ){
             std::cout <<"GG render!" << std::endl;
-            std::cout <<"1." ;
+            std::cout <<"1." << std::endl;
             setMatrix(gg.getProgramID(), "viewMatrix", viewMatrix);
             std::cout <<"2." ;
             setMatrix(gg.getProgramID(), "projectionMatrix", projectionMatrix);
@@ -71,7 +71,8 @@ class Renderer{
             std::cout <<"7." ;
             glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0 );
             std::cout <<"8." ;
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            glDrawArrays(GL_TRIANGLES, 0, gg.getAmount()
+                    );
             std::cout <<"9." ;
             glDisableVertexAttribArray(0);
             std::cout <<"0." ;

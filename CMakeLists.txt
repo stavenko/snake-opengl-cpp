@@ -29,6 +29,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX)
 add_definitions(
   -g
+  -ggdb
   -Wall
   -DTW_STATIC
   -DTW_NO_LIB_PRAGMA
