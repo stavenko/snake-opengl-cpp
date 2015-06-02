@@ -43,8 +43,8 @@ class GeometryGroup{
             GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
             GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-            const GLchar *VertexSourcePointer = (const GLchar *) vertexShader.c_str();
-            glShaderSource(VertexShaderID, 1, &VertexSourcePointer , 0);
+            const char* vshader =   vertexShader.c_str();
+            glShaderSource(VertexShaderID, 1, &vshader , NULL);
             std::cout << "RBEFORE 1" ;
             glCompileShader(VertexShaderID);
 

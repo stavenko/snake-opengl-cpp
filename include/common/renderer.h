@@ -16,7 +16,7 @@ class Renderer{
         Renderer(){
             std::cout << "init context" << std::endl;
             this->init = Init();
-            init.glfw(4,1);
+            init.glfw(2,1);
             this->window = init.window();
             init.printWindowInfo(window);
             glfwMakeContextCurrent(window);

@@ -9,7 +9,7 @@ class BoxObject: public Object3D{
 
     public:
         BoxObject(){
-            const static char* cvShader = "#version 400 core \n \
+            const static char* cvShader = "#version 120\n\
                 layout(location=0) in vec3 position;\n \
                 uniform mat4 projectionMatrix;\n \
                 uniform mat4 viewMatrix;\n \
@@ -17,10 +17,9 @@ class BoxObject: public Object3D{
                 void main(){\n \
                     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0); \n \
                 } \n";
-            const static char* cfShader = "#version 400 core \n \
-                out vec3 color; \n \
+            const static char* cfShader = "#version 120\n\
                 void main(){\n \
-                     color = vec3(1, 0, 0);\n \
+                     gl_FragColor = vec4(1, 0, 0, 1.0);\n \
                 } \n";
             const static std::string vShader = std::string(cvShader);
             const static std::string fShader = std::string(cfShader);
