@@ -22,8 +22,7 @@ class GeometryGroup{
             return vertices;
         };
         const GLuint getVertexBuffer(){ return vertexBuffer; };
-        ~GeometryGroup(){
-              glDeleteBuffers(1, &vertexBuffer);
+        virtual ~GeometryGroup(){
         }
                                                    
     private:
@@ -31,10 +30,50 @@ class GeometryGroup{
             return a>b?a:b;
         };
         void prepareVertexBuffer(std::vector<float> array){
+            static const GLfloat g_vertex_buffer_data[] = {
+                -1.0f,-1.0f,-1.0f,
+                -1.0f,-1.0f, 1.0f,
+                -1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f,-1.0f,
+                -1.0f,-1.0f,-1.0f,
+                -1.0f, 1.0f,-1.0f,
+                1.0f,-1.0f, 1.0f,
+                -1.0f,-1.0f,-1.0f,
+                1.0f,-1.0f,-1.0f,
+                1.0f, 1.0f,-1.0f,
+                1.0f,-1.0f,-1.0f,
+                -1.0f,-1.0f,-1.0f,
+                -1.0f,-1.0f,-1.0f,
+                -1.0f, 1.0f, 1.0f,
+                -1.0f, 1.0f,-1.0f,
+                1.0f,-1.0f, 1.0f,
+                -1.0f,-1.0f, 1.0f,
+                -1.0f,-1.0f,-1.0f,
+                -1.0f, 1.0f, 1.0f,
+                -1.0f,-1.0f, 1.0f,
+                1.0f,-1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                1.0f,-1.0f,-1.0f,
+                1.0f, 1.0f,-1.0f,
+                1.0f,-1.0f,-1.0f,
+                1.0f, 1.0f, 1.0f,
+                1.0f,-1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f,-1.0f,
+                -1.0f, 1.0f,-1.0f,
+                1.0f, 1.0f, 1.0f,
+                -1.0f, 1.0f,-1.0f,
+                -1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                -1.0f, 1.0f, 1.0f,
+                1.0f,-1.0f, 1.0f
+
+            }; 
             vertices = array.size()/ 3.0;
             glGenBuffers(1, &vertexBuffer);
+            std :: cout << "Buffer generated: "<< vertexBuffer << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-            glBufferData(GL_ARRAY_BUFFER, array.size(), &array[0], GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data) , g_vertex_buffer_data, GL_STATIC_DRAW);
         };
 
         void compileShaderProgram(const string vertexShader, const string fragmentShader){

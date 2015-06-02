@@ -16,7 +16,7 @@ class Renderer{
         Renderer(){
             std::cout << "init context" << std::endl;
             this->init = Init();
-            init.glfw(2,1);
+            init.glfw(3,3);
             this->window = init.window();
             init.printWindowInfo(window);
             glfwMakeContextCurrent(window);
@@ -26,8 +26,9 @@ class Renderer{
             std:: cout << "1.";
             glGenVertexArrays(1, &VertexArrayID);
             std:: cout << "2.";
+           
             glBindVertexArray(VertexArrayID);
-            std:: cout << "3.";
+            std:: cout << "3." << VertexArrayID << std::endl;
 
         };
         
@@ -49,33 +50,33 @@ class Renderer{
             return glfwWindowShouldClose(window);
         };
         ~Renderer(){
+            std::cout << "delete renderer" << std:: endl;
             glDeleteVertexArrays(1, &VertexArrayID);
             glfwDestroyWindow(window);
             glfwTerminate();
         };
     private:
-        void renderGeometryGroup(GeometryGroup gg, glm::mat4 projectionMatrix, glm::mat4 viewMatrix,  glm::mat4 modelMatrix ){
+        void renderGeometryGroup(GeometryGroup &gg, glm::mat4 projectionMatrix, glm::mat4 viewMatrix,  glm::mat4 modelMatrix ){
             std::cout <<"GG render!" << std::endl;
             std::cout <<"1." << std::endl;
-            setMatrix(gg.getProgramID(), "viewMatrix", viewMatrix);
-            std::cout <<"2." ;
-            setMatrix(gg.getProgramID(), "projectionMatrix", projectionMatrix);
-            std::cout <<"3." ;
-            setMatrix(gg.getProgramID(), "modelMatrix", modelMatrix);
-            std::cout <<"4." ;
             glUseProgram(gg.getProgramID());
-            std::cout <<"5." ;
+            setMatrix(gg.getProgramID(), "viewMatrix", viewMatrix);
+            std::cout <<"2." << std::endl;
+            setMatrix(gg.getProgramID(), "projectionMatrix", projectionMatrix);
+            std::cout <<"3." << std::endl;
+            setMatrix(gg.getProgramID(), "modelMatrix", modelMatrix);
+            std::cout <<"4." << std::endl;
+            std::cout <<"5." << std::endl;
             glEnableVertexAttribArray(0);
-            std::cout <<"6." ;
+            std::cout <<"6." << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, gg.getVertexBuffer());
-            std::cout <<"7." ;
+            std::cout <<"7." << std::endl;
             glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0 );
-            std::cout <<"8." ;
-            glDrawArrays(GL_TRIANGLES, 0, gg.getAmount()
-                    );
-            std::cout <<"9." ;
+            std::cout <<"8." << std::endl;
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            std::cout <<"9." << std::endl;
             glDisableVertexAttribArray(0);
-            std::cout <<"0." ;
+            std::cout <<"0." << std::endl;
         }
         void renderObject(shared_ptr<Object3D> objPtr, glm::mat4 viewMatrix, glm::mat4 projectionMatrix){
             glm::mat4 modelMatrix = objPtr->getModelMatrix();

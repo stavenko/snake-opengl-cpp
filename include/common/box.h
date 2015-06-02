@@ -9,7 +9,7 @@ class BoxObject: public Object3D{
 
     public:
         BoxObject(){
-            const static char* cvShader = "#version 120\n\
+            const static char* cvShader = "#version 330 core\n\
                 layout(location=0) in vec3 position;\n \
                 uniform mat4 projectionMatrix;\n \
                 uniform mat4 viewMatrix;\n \

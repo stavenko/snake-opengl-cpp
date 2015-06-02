@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 namespace{
   void error_callback(int error, const char* description)
@@ -26,7 +27,7 @@ public:
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   }
   
   void glew(){
