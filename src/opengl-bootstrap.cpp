@@ -19,43 +19,49 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
-#include <common/object3d.h>
-#include <common/geometryGroup.h>
-#include <common/box.h>
-
-#include <common/camera.h>
-#include <common/perspectiveCamera.h>
-
-#include <common/renderer.h>
-#include <common/scene.h>
+#include "game.hpp"
 
 using namespace glm;
 
+static Game *globalGame;
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+        if (key == 32){
+            globalGame->s();
+        }
+        std::cout << "KEY:" << key << std::endl;
+}
 
 int main( void )
 {
   
-    std::cout << "Renderer:" << std::endl;
-    Renderer renderer = Renderer();
-    std::cout << "Scene:" << std::endl;
-    Scene scene = Scene();
-    std::cout << "BoxObject:" << std::endl;
-    BoxObject bo = BoxObject();
+    Game game = Game();
+    game.init();
+    game.setKeyBind(key_callback);
 
-    std::cout << "add Box:" << std::endl;
-    scene.add(&bo);
-    std::cout << "create camera:" << std::endl;
-    PerspectiveCamera camera = PerspectiveCamera(45.f, 4.0f/3.0f, 0.1f, 10000.0f);
-    std::cout << "setup camera:" << std::endl;
-    camera.lookAt(glm::vec3(5, 50, 5), glm::vec3(0,0,0), glm::vec3(0,1,0));
-    std::cout << "it's actually done:" << std::endl;
+    globalGame = &game;
+    //std::cout << "Renderer:" << std::endl;
+    //Renderer renderer = Renderer();
+    //std::cout << "Scene:" << std::endl;
+    //Scene scene = Scene();
+    //std::cout << "BoxObject:" << std::endl;
+    //BoxObject bo = BoxObject();
+
+    //std::cout << "add Box:" << std::endl;
+    //scene.add(&bo);
+    //std::cout << "create camera:" << std::endl;
+    //PerspectiveCamera camera = PerspectiveCamera(45.f, 4.0f/3.0f, 0.1f, 10000.0f);
+    //std::cout << "setup camera:" << std::endl;
+    //camera.lookAt(glm::vec3(5, 50, 5), glm::vec3(0,0,0), glm::vec3(0,1,0));
+    //std::cout << "it's actually done:" << std::endl;
     
 
   do{
-      renderer.render(scene, &camera);
+      game.update(0.10);
 
   } // Check if the ESC key was pressed or the window was closed
-  while( !renderer.shouldClose());
+  while( !game.shouldClose());
 
   // Close OpenGL window and terminate GLFW
   exit(EXIT_SUCCESS);

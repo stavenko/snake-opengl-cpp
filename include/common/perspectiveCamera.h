@@ -7,6 +7,9 @@ class PerspectiveCamera:public Camera{
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;
     public:
+       PerspectiveCamera (){
+           PerspectiveCamera(45, 4.0f/3.0f, 0.1f, 1000.0f);
+       }
         PerspectiveCamera(float fov, float aspect, float near, float far){
             this->projectionMatrix = glm::perspective( fov, aspect, near, far);
             this->viewMatrix = glm::mat4();

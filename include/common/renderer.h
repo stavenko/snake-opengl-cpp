@@ -13,7 +13,11 @@ class Renderer{
         GLuint VertexArrayID;
 
     public:
+        const GLFWwindow * getWindow(){
+            return window;
+        }                
         Renderer(){
+
             std::cout << "init context" << std::endl;
             this->init = Init();
 #ifdef __APPLE_CC__
@@ -38,7 +42,7 @@ class Renderer{
         };
         
 
-        void render(Scene scene, Camera *camera){
+        void render(Scene &scene, Camera *camera){
             int width, height;
             glfwGetFramebufferSize(window, &width, &height);
             glViewport(0, 0, width, height);
@@ -46,6 +50,7 @@ class Renderer{
 
             const std::vector<shared_ptr<Object3D>> meshes = scene.getObjects();
             for( auto iter = meshes.begin(); iter != meshes.end(); iter++ ){
+                std::cout << "Render#"<< std::endl;
                 renderObject(*iter, camera->getViewMatrix(), camera->getProjectionMatrix());
             }
             glfwSwapBuffers(window);
@@ -54,6 +59,9 @@ class Renderer{
         bool shouldClose(){
             return glfwWindowShouldClose(window);
         };
+        void setKeyBind(GLFWkeyfun fun){
+            glfwSetKeyCallback(window, fun);
+        }
         ~Renderer(){
             std::cout << "delete renderer" << std:: endl;
             glDeleteVertexArrays(1, &VertexArrayID);

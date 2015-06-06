@@ -3,9 +3,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <glm/gtc/matrix_transform.hpp>
+using namespace glm;
 class BoxObject: public Object3D{
     private:
         std::vector<GeometryGroup> geometryGroups;
+        glm::vec3 position = vec3(0,0,0);
 
     public:
         BoxObject(){
@@ -77,8 +80,13 @@ class BoxObject: public Object3D{
         }
 
         virtual glm::mat4 getModelMatrix(){
-            return glm::mat4(1.0f);
+            return glm::translate( mat4(1.0), position);
         };
+        void setPosition(float x, float y, float z){
+            position.x = x;
+            position.y = y;
+            position.z = z;
+        }
         virtual std::vector<GeometryGroup> getGeometryGroups(){
             return geometryGroups;
         };
