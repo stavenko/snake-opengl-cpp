@@ -1,7 +1,12 @@
 #pragma once
 
 #include <string>
-#include <GL/glew.h>
+#ifndef __APPLE_CC__
+    #include <GL/glew.h>
+#else
+    #include <OpenGL/gl3.h>
+    #include <OpenGL/glext.h>
+#endif
 #include <GLFW/glfw3.h>
 namespace{
   void error_callback(int error, const char* description)
@@ -21,13 +26,16 @@ public:
       exit(EXIT_FAILURE);
     }
     glfwSetErrorCallback(error_callback);
+    std::cout << "Init opengl version:" << major <<"." << minor << std::endl; 
 
   
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    if(major *10 + minor >=32){
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    }
   }
   
   void glew(){

@@ -15,7 +15,6 @@ class GeometryGroup{
             prepareVertexBuffer( vertexArray );
         };
         const GLuint getProgramID(){ 
-            std::cout <<"get program";
             return programID; 
         }; 
         const GLuint getAmount(){
@@ -30,70 +29,26 @@ class GeometryGroup{
             return a>b?a:b;
         };
         void prepareVertexBuffer(std::vector<float> array){
-            static const GLfloat g_vertex_buffer_data[] = {
-                -1.0f,-1.0f,-1.0f,
-                -1.0f,-1.0f, 1.0f,
-                -1.0f, 1.0f, 1.0f,
-                1.0f, 1.0f,-1.0f,
-                -1.0f,-1.0f,-1.0f,
-                -1.0f, 1.0f,-1.0f,
-                1.0f,-1.0f, 1.0f,
-                -1.0f,-1.0f,-1.0f,
-                1.0f,-1.0f,-1.0f,
-                1.0f, 1.0f,-1.0f,
-                1.0f,-1.0f,-1.0f,
-                -1.0f,-1.0f,-1.0f,
-                -1.0f,-1.0f,-1.0f,
-                -1.0f, 1.0f, 1.0f,
-                -1.0f, 1.0f,-1.0f,
-                1.0f,-1.0f, 1.0f,
-                -1.0f,-1.0f, 1.0f,
-                -1.0f,-1.0f,-1.0f,
-                -1.0f, 1.0f, 1.0f,
-                -1.0f,-1.0f, 1.0f,
-                1.0f,-1.0f, 1.0f,
-                1.0f, 1.0f, 1.0f,
-                1.0f,-1.0f,-1.0f,
-                1.0f, 1.0f,-1.0f,
-                1.0f,-1.0f,-1.0f,
-                1.0f, 1.0f, 1.0f,
-                1.0f,-1.0f, 1.0f,
-                1.0f, 1.0f, 1.0f,
-                1.0f, 1.0f,-1.0f,
-                -1.0f, 1.0f,-1.0f,
-                1.0f, 1.0f, 1.0f,
-                -1.0f, 1.0f,-1.0f,
-                -1.0f, 1.0f, 1.0f,
-                1.0f, 1.0f, 1.0f,
-                -1.0f, 1.0f, 1.0f,
-                1.0f,-1.0f, 1.0f
-
-            }; 
             vertices = array.size()/ 3.0;
             glGenBuffers(1, &vertexBuffer);
             std :: cout << "Buffer generated: "<< vertexBuffer << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data) , g_vertex_buffer_data, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * array.size() , &array[0], GL_STATIC_DRAW);
         };
 
-        void compileShaderProgram(const string vertexShader, const string fragmentShader){
+        void compileShaderProgram(string vertexShader, string fragmentShader){
             GLint Result = GL_FALSE;
             int InfoLogLength;
             GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
             GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
             const char* vshader =   vertexShader.c_str();
             glShaderSource(VertexShaderID, 1, &vshader , NULL);
-            std::cout << "RBEFORE 1" ;
             glCompileShader(VertexShaderID);
 
             glGetShaderiv(VertexShaderID , GL_COMPILE_STATUS, &Result);
-            std::cout << "RBEFORE 2" ;
             glGetShaderiv(VertexShaderID , GL_INFO_LOG_LENGTH, &InfoLogLength);
             std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-            std::cout << "RBEFORE 3" ;
             glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-            std::cout << "RAFTER" ;
             
             char const * FragmentSourcePointer = fragmentShader.c_str();
             glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
@@ -104,7 +59,7 @@ class GeometryGroup{
 
             std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
             glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-            std::cout << &FragmentShaderErrorMessage[0]<< std::endl;
+            fprintf(stdout,"%s\n", &FragmentShaderErrorMessage[0]);
 
             std::cout <<  "Linking program" << std:: endl;
             programID = glCreateProgram();
