@@ -82,6 +82,9 @@ class BoxObject: public Object3D{
         virtual glm::mat4 getModelMatrix(){
             return glm::translate( mat4(1.0), position);
         };
+        void setPosition(glm::vec3 v){
+            position = v;
+        }
         void setPosition(float x, float y, float z){
             position.x = x;
             position.y = y;

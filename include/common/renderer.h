@@ -50,7 +50,6 @@ class Renderer{
 
             const std::vector<shared_ptr<Object3D>> meshes = scene.getObjects();
             for( auto iter = meshes.begin(); iter != meshes.end(); iter++ ){
-                std::cout << "Render#"<< std::endl;
                 renderObject(*iter, camera->getViewMatrix(), camera->getProjectionMatrix());
             }
             glfwSwapBuffers(window);
