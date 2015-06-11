@@ -15,29 +15,34 @@ class Game{
         int moveSpeed = 1;
         int fieldWidth  = 50;
         int fieldHeight = 50;
+        int segmentsToAdd = 0;
         vec2 apple;
         BoxObject *appleBox;
     private:
         void eatApple(){
-            std::cout << "eat apple"<< std::endl ;
             apple = vec2(rand()%fieldWidth, rand() % fieldHeight);
             appleBox -> setPosition(glm::vec3(apple, 0.0));
-            currentSnake.addSegments(4);
-            refreshScene();
+            segmentsToAdd = 4;
         }
         void _moveSnakeForSure(){
-            if(currentSnake.segments.size() == 0){return;}
-            for(auto iter = currentSnake.segments.begin(); iter != currentSnake.segments.end(); iter++){
-               (*iter) -> propagate(fieldWidth, fieldHeight ); 
+            if(currentSnake.length() == 0) return;
+            currentSnake.propagate(fieldWidth, fieldHeight);
+            if(segmentsToAdd > 0){
+                std::vector<Object3D*> sceneobjects = currentSnake.addSegments(1);
+                segmentsToAdd--;
+                for (auto so: sceneobjects){
+                    scene.add(so);
+                }
             }
-            if( glm::length (currentSnake.segments.front()->getPosition() - apple) < 0.99){
+            if(currentSnake.isSelfEated()){
+                this->start();
+            }
+            Segment *s = currentSnake.head();
+            if( glm::length (s->getPosition() - apple) < 0.99){
                 eatApple();
             }
+            currentSnake.copyDirections();
 
-            for(auto iter = currentSnake.segments.rbegin(); iter != currentSnake.segments.rend()-1; iter++){
-                auto next = iter + 1;
-                (*iter)->setDirection((*next)->getDirection() );
-            }
             
         }
         void moveSnake(float timeDiff){
@@ -49,9 +54,7 @@ class Game{
             };
         };
         void turn_left(){
-            // lookup snake's head
-            std::cout << "turn left" << std::endl;
-            Segment *s = currentSnake.segments.front();
+            Segment *s = currentSnake.head();
             vec2 dir = s->getDirection();
             vec2 ndir;
             if(dir.x != 0){
@@ -70,9 +73,7 @@ class Game{
             s->setDirection(ndir);
         }
         void turn_right(){
-            // lookup snake's head
-            std::cout << "turn right" << std::endl;
-            Segment *s = currentSnake.segments.front();
+            Segment *s = currentSnake.head();
             vec2 dir = s->getDirection();
             vec2 ndir;
             if(dir.x != 0){
@@ -102,20 +103,13 @@ class Game{
             appleBox->setPosition(glm::vec3(apple, 0.0));
             scene.add(appleBox);
 
-
-        }
-        void refreshScene(){
-            scene.clear();
-            for(auto iter = currentSnake.segments.begin(); iter != currentSnake.segments.end(); iter++){
-                std :: cout << "put to scene" << std :: endl;
-                scene.add((*iter)->getBox());
-            }
-            putApple();
-
         }
         void start(){
-            currentSnake = Snake(4);
-            refreshScene();
+            std::cout << "start the game" << std::endl;
+            currentSnake = Snake(1);
+            segmentsToAdd = 3;
+            scene.clear();
+            putApple();
             
         };
 
